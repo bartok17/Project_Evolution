@@ -2,6 +2,7 @@ Zasady i instrukcje kożystania z aplikacji:
 
 
 Po uruchomieniu programu użytkownikowi pownno wyśfietlić się nowe okno proszące o informacjie na temat symulacji
+
 dane które należy wpisać i ograniczenia są następujące:
 
 
