@@ -30,3 +30,5 @@ wariant mutacji: wbór z dostępnych
 
 długość genomu zwierzaków: min 1wariant zachowania zwierzaków : wbór z dostępnych.
 
+W przypadku błednych wartości będą one automatycznie ignorowane i respektowalnie najmniejsza lub największa wartość będzie użyta
+
