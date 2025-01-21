@@ -38,18 +38,18 @@ class AnimalTest {
 
         animal.move(MoveDirection.FORWARD, mockValidator);
 
-        assertEquals(new Vector2d(1, 0), animal.getPosition(), "Animal should move east correctly");
+        assertEquals(new Vector2d(1, 0), animal.getPosition(), "Animal should move east");
     }
 
     @Test
     void testInitializeGenes() {
         Animal animalWithGenes = new Animal(
-                new Vector2d(0, 0), 8, 1, 3, true, 100, "TestAnimalWithGenes",
+                new Vector2d(0, 0), 8, 1, 3, true, 100, "neodymium",
                 new int[]{0, 1, 2, 3,4,5,6,7}, new int[]{0,1,2,3,4, 5, 6, 7}, 2
         );
 
         int[] genes = animalWithGenes.getGens();
-        assertEquals(8, genes.length, "Genes should be correct size");
+        assertEquals(8, genes.length, "should be correct size");
         assertNotNull(genes, "genes need to be inicialized");
     }
 
@@ -84,15 +84,15 @@ class AnimalTest {
     @Test
     void testGetResourceName() {
         animal.setDirection(MapDirection.NORTH);
-        assertEquals("Animal_down.png", animal.getResourceName(), "Resource name should match the direction");
+        assertEquals("Animal_down.png", animal.getResourceName(), "should match the direction");
 
         animal.setDirection(MapDirection.SOUTH);
-        assertEquals("Animal_up.png", animal.getResourceName(), "Resource name should match the direction");
+        assertEquals("Animal_up.png", animal.getResourceName(), "should match the direction");
     }
 
 
     @Test
     void testToString() {
-        assertEquals("0,0", animal.toString(), "toString method should return the position");
+        assertEquals("0,0", animal.toString(), "should return the position");
     }
 }
