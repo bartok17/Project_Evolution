@@ -241,13 +241,13 @@ public class Animal implements WorldElement,Comparable<Animal> {
 
     @Override
     public int compareTo(Animal other) {
-        if(this.position != other.position)
+        if (!this.position.equals(other.position))
             return this.position.compareTo(other.position);
-        if(this.energy != other.energy)
+        else if(this.energy != other.energy)
             return -Integer.compare( this.energy , other.energy);
-        if(this.age != other.age)
+        else if(this.age != other.age)
             return -Integer.compare(this.age, other.age);
-        if(this.children != other.children)
+        else if(this.children != other.children)
             return -Integer.compare(this.children, other.children);
         else return 0;
 

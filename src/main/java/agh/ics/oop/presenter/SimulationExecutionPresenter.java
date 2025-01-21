@@ -26,9 +26,12 @@ import java.util.Optional;
 public class SimulationExecutionPresenter implements MapChangeListener {
     private  float CELL_HEIGHT;
 
-    public Button speedUpButton;
-    public Button speedDownButton;
-    public Button quitAnimal;
+    @FXML
+    private Button speedUpButton;
+    @FXML
+    private Button speedDownButton;
+    @FXML
+    private Button quitAnimal;
     @FXML
     private Button pauseButton;
 
