@@ -12,16 +12,22 @@ import javafx.fxml.FXML;
 
 import javafx.geometry.HPos;
 
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import javax.swing.*;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static com.sun.webkit.graphics.WCGraphicsManager.getResourceName;
 
 public class SimulationExecutionPresenter implements MapChangeListener {
     private  float CELL_HEIGHT;
@@ -158,6 +164,19 @@ public class SimulationExecutionPresenter implements MapChangeListener {
         label.setText("y/x");
         mapGrid.add(label, 0, 0);
         GridPane.setHalignment(label, HPos.CENTER);
+
+        Image mark = new Image("mark.png");
+        ImageView markView = new ImageView(mark);
+        markView.setFitHeight(CELL_HEIGHT);
+        markView.setFitWidth(CELL_HEIGHT);
+
+
+
+
+
+
+        mapGrid.add(markView, observedAnimal.getPosition().x()+1, observedAnimal.getPosition().y()+1);
+
     }
 
     private void clearGrid() {
