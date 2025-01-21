@@ -8,17 +8,25 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 public class WorldElementBox extends VBox {
-    private static final int IMAGE_SIZE = 40;
+    private static final int IMAGE_SIZE = 60;
 
-    public WorldElementBox(WorldElement element) {
-        Image image = new Image(element.getResourceName());
+    public WorldElementBox(WorldElement worldElement) {
+        this(worldElement,false);
+    }
+    public WorldElementBox(WorldElement element,boolean isLabel) {
+        Image image = element.getImage();
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(IMAGE_SIZE);
         imageView.setFitHeight(IMAGE_SIZE);
 
-        Label infoLabel = new Label(element.getInfo());
 
+        if(isLabel) {
+            Label infoLabel = new Label(element.getInfo());
+            this.getChildren().addAll(infoLabel);
+        }
         this.getChildren().addAll(imageView);
         this.setAlignment(Pos.CENTER);
+
     }
+
 }

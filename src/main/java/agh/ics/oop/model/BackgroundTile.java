@@ -5,13 +5,13 @@ import javafx.scene.image.Image;
 
 import java.util.HashMap;
 
-public class Grass implements WorldElement {
+public class BackgroundTile implements WorldElement {
     final static private HashMap<String, Image> images = new  HashMap<String,Image>();
     final private Vector2d position;
     public Vector2d getPosition() {
         return position;
     }
-    public Grass(Vector2d position) {
+    public BackgroundTile(Vector2d position) {
         this.position = position;
     }
 
@@ -24,27 +24,26 @@ public class Grass implements WorldElement {
     @Override
     public Image getImage()
     {
-        if(!images.containsKey("grass-2.png"))
+        if(!images.containsKey("backgroundTile.png"))
         {
-            images.put("grass-2.png",new Image(getResourceName()));
+            images.put("backgroundTile.png",new Image(getResourceName()));
         }
-        return images.get("grass-2.png");
+        return images.get("backgroundTile.png");
     }
 
     @Override
     public String getResourceName() {
-        return "grass_MC.png";
+        return "backgroundTile.png";
     }
 
     @Override
     public String getInfo() {
-        return "Grass";
+        return "Background";
     }
 
     @Override
     public String toString() {
-        return "*";
+        return " ";
     }
-
 
 }

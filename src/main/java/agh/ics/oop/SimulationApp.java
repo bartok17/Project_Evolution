@@ -17,6 +17,9 @@ public class SimulationApp extends Application {
         BorderPane viewRoot = loader.load();
 
         configureStage(primaryStage, viewRoot);
+        //primaryStage.setOnCloseRequest(event -> {
+        //    primaryStage.close();
+        //});
 
         primaryStage.show();
     }

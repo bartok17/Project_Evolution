@@ -7,21 +7,82 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.ComboBox?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            minHeight="200.0" minWidth="850.0"
+            minHeight="400.0" minWidth="1000.0"
             fx:controller="agh.ics.oop.presenter.SimulationPresenter">
-    <center>
-    <VBox xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          alignment="CENTER"
-          spacing="10"
-          prefWidth="300"
-          prefHeight="200">
-        <TextField fx:id="argsTextField" promptText="Enter details..."/>
-        <Button fx:id="startButton" text="Start" onAction="#onSimulationStartClicked"/>
-    </VBox>
-    </center>
+     <center>
+         <VBox xmlns="http://javafx.com/javafx"
+               xmlns:fx="http://javafx.com/fxml"
+               alignment="CENTER"
+               spacing="10"
+               prefWidth="300"
+               prefHeight="200">
+             <GridPane alignment="CENTER" hgap="10" vgap="10">
+
+
+                 <Label text="Starting Animals:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                 <TextField fx:id="startingAnimals" promptText="Enter animals amount..." GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                 <Label text="Starting Energy:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                 <TextField fx:id="startingEnergy" promptText="Enter energy amount..." GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+
+                 <Label text="Map Dimensions:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                 <HBox GridPane.rowIndex="1" GridPane.columnIndex="1">
+
+                     <TextField fx:id="mapWidthField" promptText="x..." maxWidth="50"/>
+                     <TextField fx:id="mapHeightField" promptText="y..." maxWidth="50"/>
+
+
+                 </HBox>
+
+                 <Label text="Starting Grass:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                 <TextField fx:id="startingGrass" promptText="Enter grass amount..." GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                 <Label text="Map Type:" GridPane.rowIndex="1" GridPane.columnIndex="4"/>
+                 <ComboBox fx:id="mapType" promptText="chooseType" GridPane.rowIndex="1" GridPane.columnIndex="5"/>
+
+
+
+
+                 <Label text="Grass Spawn:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                 <TextField fx:id="grassFrequency" promptText="Enter amount/iteration..." GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                 <Label text="Eating Energy:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                 <TextField fx:id="grassEnergy" promptText="Enter energy/grass..." GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                 <Label text="Mutation Type:" GridPane.rowIndex="2" GridPane.columnIndex="4"/>
+                 <ComboBox fx:id="mutationType" promptText="chooseType" GridPane.rowIndex="2" GridPane.columnIndex="5"/>
+
+                 <Label text="GrassField Type:" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+                 <ComboBox fx:id="grassFieldType" promptText="chooseType" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+
+                 <Label text="Energy To Reproduce" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                 <TextField fx:id="energyToReproduce" promptText="Enter amount/iteration..." GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                 <Label text="Reproduction Cost" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+                 <TextField fx:id="reproductionCost" promptText="Enter energy/grass..." GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+                 <Label text="Animal Type:" GridPane.rowIndex="3" GridPane.columnIndex="4"/>
+                 <ComboBox fx:id="animalType" promptText="chooseType" GridPane.rowIndex="3" GridPane.columnIndex="5"/>
+
+
+                 <Label text="Gene Mutations" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                 <HBox GridPane.rowIndex="4" GridPane.columnIndex="1">
+                 <TextField fx:id="minMutation" promptText="min..." maxWidth="50" />
+                     <TextField fx:id="maxMutation" promptText="max..." maxWidth="50"/>
+                 </HBox>
+                 <Label text="Gene Length" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+                 <TextField fx:id="geneLength" promptText="Enter amount/iteration..." GridPane.rowIndex="4" GridPane.columnIndex="3"/>
+
+                 <Label text="Preset Name" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                 <TextField fx:id="presetName" promptText="Enter Preset name..." GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                 <Button fx:id="savePreset" text="save" onAction="#onAnimalExit" GridPane.rowIndex="5" GridPane.columnIndex="2"/>
+                 <ComboBox fx:id="fileSelector" layoutX="10" layoutY="300" prefWidth="200" GridPane.rowIndex="5" GridPane.columnIndex="3" />
+
+
+             </GridPane>
+             <Button fx:id="startButton" text="Start" onAction="#onSimulationStartClicked"/>
+         </VBox>
+
+
+     </center>
 </BorderPane>
 
 

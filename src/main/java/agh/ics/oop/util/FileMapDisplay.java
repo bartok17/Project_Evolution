@@ -13,6 +13,7 @@ public class FileMapDisplay implements MapChangeListener {
         String fileName = "map_" + worldMap.getId()+".log";
         String toAppend ="Mapa o Id: " + worldMap.getId() + "\n"
                 + message + "\n"
+                + worldMap + "\n"
                 +"\n";
 
 

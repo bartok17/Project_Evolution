@@ -12,7 +12,7 @@ public class ConsoleMapDisplay implements MapChangeListener {
     }
     @Override
     synchronized public void onMapChanged(WorldMap worldMap, String message) {
-        synchronized (Simulation.class) {
+        synchronized (System.out) {
             moveCount++;
             System.out.println("Mapa o Id: " + worldMap.getId());
             System.out.println(message);

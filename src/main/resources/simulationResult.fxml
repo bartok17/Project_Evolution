@@ -7,10 +7,52 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.StackPane?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            minHeight="500.0" minWidth="500.0"
+            minHeight="1000.0" minWidth="1000.0"
+            prefHeight="1000" prefWidth="1000"
             fx:controller="agh.ics.oop.presenter.SimulationExecutionPresenter">
+    <left>
+        <StackPane fx:id="leftPanelStack"
+                   prefWidth="150"
+                   style="-fx-background-color: #f0f0f0;">
+            <!-- First Panel -->
+            <VBox fx:id="infoPanelWorld"
+                  alignment="CENTER"
+                  spacing="10"
+                  visible="true">
+                <Label fx:id="turn" text="Turns: "/>
+                <Label fx:id="animalCount" text="Animals: "/>
+                <Label fx:id="grassCount" text="Grasses: "/>
+                <Label fx:id="freeSpaces" text="Free Spaces: "/>
+                <Label fx:id="averageEnergy" text="Avg. Energy: "/>
+                <Label fx:id="averageLifespan" text="Avg. Lifespan"/>
+                <Label fx:id="averageChildren" text="Avg. Children"/>
+            </VBox>
+
+            <!-- Second Panel -->
+            <VBox fx:id="infoPanelAnimal"
+                  alignment="CENTER"
+                  spacing="10"
+                  visible="false">
+                <Label text="Animal Info" style="-fx-font-weight: bold;" />
+                <Label fx:id="name" text="Name: "/>
+                <Label fx:id="genome" text="genome: "/>
+                <Label fx:id="genomePart" text="Active Part: "/>
+                <Label fx:id="energy" text="Energy: "/>
+                <Label fx:id="foodEaten" text="Food Eaten: "/>
+                <Label fx:id="children" text="Children: "/>
+                <Label fx:id="relativeChildren" text="Relative Children"/>
+                <Label fx:id="life" text="Age"/>
+                <Label fx:id="dead" text="Animal Is Alive"/>
+                <Button fx:id="quitAnimal" text="return" onAction="#onAnimalExit"/>
+
+            </VBox>
+        </StackPane>
+    </left>
+
+
     <center>
         <VBox xmlns="http://javafx.com/javafx"
               xmlns:fx="http://javafx.com/fxml"
@@ -19,7 +61,13 @@
               prefWidth="300"
               prefHeight="200">
             <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER"/>
-            <Label fx:id="descriptionLabel" text="Waiting for the simulation start" textAlignment="CENTER"/>
+            <Button fx:id="pauseButton" text="Pause/Unpause" onAction="#onSimulationPaused"/>
+            <HBox>
+            <Button fx:id="speedUpButton" text="Speed Up" onAction="#onSimulationSpeedUp"/>
+                <Button fx:id="speedDownButton" text="Speed Down" onAction="#onSimulationSpeedDown"/>
+            </HBox>
+
+
         </VBox>
     </center>
 </BorderPane>

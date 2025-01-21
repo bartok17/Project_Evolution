@@ -1,43 +1,79 @@
 package agh.ics.oop.model;
 import agh.ics.oop.model.interfaces.WorldElement;
 import agh.ics.oop.util.MapVisualizer;
+import javafx.scene.image.Image;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class GrassField extends AbstractWorldMap {
+public abstract class GrassField extends AbstractWorldMap {
 
-     final Map<Vector2d, Grass> grasses = new HashMap<>();
+    protected final int width;
+    protected final int height;
+    protected final Vector2d lowerLeft;
+    protected Vector2d upperRight;
+    protected final Boundary boundary;
+    protected Random rand = new Random();
+    protected final boolean geneSwap;
 
-    private final Vector2d lowerLeft;
+    protected final int grassValue;
+    public int getGrassValue(){return grassValue;}
+
+    public boolean getGeneSwap() {return geneSwap;}
+    public int getHeight() {
+        return height;
+    }
+    public int getWidth() {
+        return width;
+    }
+
+    protected AbstractMapMovementLogistic mapLogic;
+    protected void setMapLogic(AbstractMapMovementLogistic mapLogic) { this.mapLogic = mapLogic;this.mapLogic.grassField = this;}
+    AbstractMapMovementLogistic getMapLogic() {return mapLogic;}
 
 
-    public GrassField(int grassCount,int mapId) {
+
+    final Map<Vector2d, Grass> grasses = new HashMap<>();
+    public int getGrassCount() {return grasses.size();}
+    final Set<Vector2d> availablePriorityPositions = new HashSet<>();
+    final Set<Vector2d> availableNonPriorityPositions = new HashSet<>();
+    public int getFreeSpaces(){return availableNonPriorityPositions.size() + availablePriorityPositions.size();}
+
+
+    public GrassField(int width, int height,boolean geneSwap,int mapId,int grassValue) {
 
         super(mapId);
-        Random rand = new Random();
-        int flooredGrass = (int)Math.floor(Math.sqrt(grassCount * 10));
-        for (int i = 0; i < grassCount; i++) {
-
-            Vector2d newPosition = new Vector2d(rand.nextInt(flooredGrass), rand.nextInt(flooredGrass));
-            while (isOccupiedByGrass(newPosition)) {
-                newPosition = new Vector2d(rand.nextInt(flooredGrass), rand.nextInt(flooredGrass));
-            }
-            grasses.put(newPosition, new Grass(newPosition));
-
-        }
-        mapVisualizer = new MapVisualizer(this);
+        this.width = width;
+        this.height = height;
         lowerLeft = new Vector2d(0, 0);
+        upperRight = new Vector2d(width-1, height-1);
+        boundary = new Boundary(lowerLeft, upperRight);
+        mapVisualizer = new MapVisualizer(this);
+        this.geneSwap = geneSwap;
+        this.grassValue = grassValue;
+
+
+    }
+    protected void initializeGrassPlaces()
+    {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                Vector2d position = new Vector2d(i, j);
+                if (isPriorityPosition(position)) { availablePriorityPositions.add(position); }
+                else { availableNonPriorityPositions.add(position); }
+            }
+        }
+    }
+
+    @Override
+    public void move(Animal animal, MoveDirection direction) {
+        super.move(animal, direction);
+        animal.useEnergy(mapLogic.getConsumedEnergy(animal.getPosition()));
 
     }
 
-
-
-
-
-
-    private boolean isOccupiedByGrass(Vector2d position) {
+    public boolean isOccupiedByGrass(Vector2d position) {
         return grasses.containsKey(position);
     }
     @Override
@@ -51,10 +87,23 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public boolean canMoveTo(Vector2d position) {
-         if(isOccupied(position)) return false;
-         else return !position.precedes(lowerLeft);
+    public List<WorldElement> objectsAt(Vector2d position) {
+        List<WorldElement> objects = super.objectsAt(position);
+        if (isOccupiedByGrass(position)) { objects.add(grasses.get(position)); }
+        return objects;
     }
+
+    @Override
+    public boolean canMoveTo(Vector2d position) {
+       return mapLogic.canMoveTo(position);
+
+    }
+
+    @Override
+    public Vector2d convertMove(Vector2d position) {
+       return mapLogic.convertMove(position);
+    }
+
     @Override
     public Collection<WorldElement> getElements() {
         return Stream.concat(
@@ -65,14 +114,23 @@ public class GrassField extends AbstractWorldMap {
     @Override
 
     public Boundary getCurrentBounds() {
-        Vector2d upperRight = lowerLeft;
-        for (WorldElement worldElement : getElements()) {
-            if (worldElement.getPosition().follows(upperRight)) {
-                upperRight = upperRight.upperRight(worldElement.getPosition());
-            }
-        }
+        return boundary;
+    }
 
+    protected boolean getTargetField()
+    {
+        int result = rand.nextInt(5);
+        return result != 0;
+    }
+    abstract public boolean isPriorityPosition(Vector2d position);
+    abstract public void addGrass();
+    public void removeGrass(Vector2d position) {
+        grasses.remove(position);
+        if(isPriorityPosition(position)) availablePriorityPositions.add(position);
+        else availableNonPriorityPositions.add(position);
 
-        return new Boundary(lowerLeft, upperRight);
+    }
+    public void mapEvent() {
+        mapLogic.turnEvent();
     }
 }
