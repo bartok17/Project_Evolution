@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class SimulationExecutionPresenter implements MapChangeListener {
-    private static final int CELL_HEIGHT = 60;
-    private static final double CELL_WIDTH = 60;
+    private  float CELL_HEIGHT;
+
     public Button speedUpButton;
     public Button speedDownButton;
     public Button quitAnimal;
@@ -81,6 +81,7 @@ public class SimulationExecutionPresenter implements MapChangeListener {
     public void setWorldMap(GrassField worldMap,Simulation simulation) {
         this.simulation = simulation;
         this.worldMap = worldMap;
+        this.CELL_HEIGHT =  (float) 800/worldMap.getHeight();
     }
 
     private void drawMap() {
@@ -123,19 +124,19 @@ public class SimulationExecutionPresenter implements MapChangeListener {
                     WorldElementBox label;
                     if(i == object.size() -1 && object.get(i) instanceof Animal animal)
                     {
-                        label = new WorldElementBox(object.get(i),true);
+                        label = new WorldElementBox(object.get(i),CELL_HEIGHT,true);
                         label.setOnMouseClicked(event -> onAnimalEnter(animal));
                     }
                     else {
-                         label = new WorldElementBox(object.get(i));
+                         label = new WorldElementBox(object.get(i),CELL_HEIGHT);
                     }
                     mapGrid.add(label, x + 1, y + 1);
                     GridPane.setHalignment(label, HPos.CENTER);
                 }
             }
-            mapGrid.getColumnConstraints().add(new ColumnConstraints(CELL_WIDTH));
+            mapGrid.getColumnConstraints().add(new ColumnConstraints(CELL_HEIGHT));
         }
-        mapGrid.getColumnConstraints().add(new ColumnConstraints(CELL_WIDTH));
+        mapGrid.getColumnConstraints().add(new ColumnConstraints(CELL_HEIGHT));
         mapGrid.getRowConstraints().add(new RowConstraints(CELL_HEIGHT));
 
         for (int x = 0; x <= boundary.upperRight().x(); x++) {
@@ -189,6 +190,7 @@ public class SimulationExecutionPresenter implements MapChangeListener {
         infoPanelAnimal.setVisible(false);
         infoPanelWorld.setVisible(true);
         observedAnimal = null;
+        drawMap();
 
     }
     public void onAnimalEnter(Animal animal) {
@@ -196,6 +198,7 @@ public class SimulationExecutionPresenter implements MapChangeListener {
         infoPanelAnimal.setVisible(true);
         infoPanelWorld.setVisible(false);
         observedAnimal = animal;
+        drawMap();
 
     }
 }

@@ -73,7 +73,7 @@
 
                  <Label text="Preset Name" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
                  <TextField fx:id="presetName" promptText="Enter Preset name..." GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-                 <Button fx:id="savePreset" text="save" onAction="#onAnimalExit" GridPane.rowIndex="5" GridPane.columnIndex="2"/>
+                 <Button fx:id="savePreset" text="save" onAction="#onSavePresetClicked" GridPane.rowIndex="5" GridPane.columnIndex="2"/>
                  <ComboBox fx:id="fileSelector" layoutX="10" layoutY="300" prefWidth="200" GridPane.rowIndex="5" GridPane.columnIndex="3" />
 
 

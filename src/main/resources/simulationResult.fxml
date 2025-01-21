@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            minHeight="1000.0" minWidth="1000.0"
+            minHeight="1000.0" minWidth="1100.0"
             prefHeight="1000" prefWidth="1000"
             fx:controller="agh.ics.oop.presenter.SimulationExecutionPresenter">
     <left>
@@ -19,7 +19,7 @@
                    style="-fx-background-color: #f0f0f0;">
             <!-- First Panel -->
             <VBox fx:id="infoPanelWorld"
-                  alignment="CENTER"
+                  alignment="CENTER_LEFT"
                   spacing="10"
                   visible="true">
                 <Label fx:id="turn" text="Turns: "/>
@@ -33,12 +33,12 @@
 
             <!-- Second Panel -->
             <VBox fx:id="infoPanelAnimal"
-                  alignment="CENTER"
+                  alignment="CENTER_LEFT"
                   spacing="10"
                   visible="false">
                 <Label text="Animal Info" style="-fx-font-weight: bold;" />
                 <Label fx:id="name" text="Name: "/>
-                <Label fx:id="genome" text="genome: "/>
+                <Label fx:id="genome" text="genome: " wrapText="true"/>
                 <Label fx:id="genomePart" text="Active Part: "/>
                 <Label fx:id="energy" text="Energy: "/>
                 <Label fx:id="foodEaten" text="Food Eaten: "/>

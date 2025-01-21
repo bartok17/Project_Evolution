@@ -88,13 +88,20 @@ public class SimulationPresenter implements Initializable {
         checkAllValues();
 
         loadTxtFilesFromFolder("/saves");
+        fileSelector.setOnAction(event -> {
+            String selectedFile = fileSelector.getValue();
+            if (selectedFile != null) {
+                parseFileContents("/saves/" + selectedFile);
+                presetName.setText(selectedFile);
+            }
+        });
     }
 
 
     private void checkAllValues() {
         //Remember to use only already checked variables for reference to next variables
-        checkMinMaxValues(mapHeightField,3,15);
-        checkMinMaxValues(mapWidthField,3,15);
+        checkMinMaxValues(mapHeightField,5,100);
+        checkMinMaxValues(mapWidthField,5,100);
         checkMinMaxValues(startingAnimals,1, getHeight() * getWidth() / 2 );
         checkMinMaxValues(startingEnergy,1,10000);
         checkMinMaxValues(startingGrass,0, getHeight() * getWidth());
@@ -181,8 +188,6 @@ public class SimulationPresenter implements Initializable {
 
     }
 
-    public void onAnimalExit(ActionEvent actionEvent) {
-    }
 
     private void loadTxtFilesFromFolder(String folderPath) {
        Path folder = Paths.get(System.getProperty("user.dir") ,folderPath);
@@ -202,6 +207,70 @@ public class SimulationPresenter implements Initializable {
                     .forEach(file -> fileSelector.getItems().add(file.getFileName().toString()));
         } catch (IOException e) {
             System.err.println("Error loading files: " + e.getMessage());
+        }
+    }
+    private void parseFileContents(String filePath) {
+        Path fullPath = Paths.get(System.getProperty("user.dir"), filePath);
+        try {
+            String content = Files.readString(fullPath);
+            String[] values = content.split(";");
+
+            mapHeightField.setText(values[0]);
+            mapWidthField.setText(values[1]);
+            startingAnimals.setText(values[2]);
+            startingEnergy.setText(values[3]);
+            startingGrass.setText(values[4]);
+            reproductionCost.setText(values[5]);
+            energyToReproduce.setText(values[6]);
+            minMutation.setText(values[7]);
+            maxMutation.setText(values[8]);
+            grassFrequency.setText(values[9]);
+            grassEnergy.setText(values[10]);
+            geneLength.setText(values[11]);
+            mapType.setValue(values[12]);
+            grassFieldType.setValue(values[13]);
+            mutationType.setValue(values[14]);
+            animalType.setValue(values[15]);
+
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.err.println("Error parsing file content: " + e.getMessage());
+        }
+    }
+    public void onSavePresetClicked(ActionEvent actionEvent) {
+        String presetFileName = presetName.getText().trim();
+        if (presetFileName.isEmpty()) {
+            System.err.println("Preset name cannot be empty.");
+            return;
+        }
+
+        String filePath = System.getProperty("user.dir") + "/saves/" + presetFileName;
+        String content = String.join(";",
+                mapHeightField.getText(),
+                mapWidthField.getText(),
+                startingAnimals.getText(),
+                startingEnergy.getText(),
+                startingGrass.getText(),
+                reproductionCost.getText(),
+                energyToReproduce.getText(),
+                minMutation.getText(),
+                maxMutation.getText(),
+                grassFrequency.getText(),
+                grassEnergy.getText(),
+                geneLength.getText(),
+                mapType.getValue(),
+                grassFieldType.getValue(),
+                mutationType.getValue(),
+                animalType.getValue()
+        );
+
+        try {
+            Files.writeString(Paths.get(filePath), content);
+            System.out.println("Preset saved to: " + filePath);
+            fileSelector.getItems().add(presetFileName);
+        } catch (IOException e) {
+            System.err.println("Error saving preset: " + e.getMessage());
         }
     }
 }
