@@ -7,11 +7,10 @@ public class RequiredGrassField extends GrassField {
     private final int equatorSize;
     private final int equatorStart;
 
-    public RequiredGrassField(int width, int height,int grassCount,boolean geneSwap,int mapId,int grassValue,AbstractMapMovementLogistic mapMovementLogistic)
-    {
-        super(width,height,geneSwap,mapId,grassValue);
+    public RequiredGrassField(int width, int height, int grassCount, boolean geneSwap, int mapId, int grassValue, AbstractMapMovementLogistic mapMovementLogistic) {
+        super(width, height, geneSwap, mapId, grassValue);
         setMapLogic(mapMovementLogistic);
-        this.equatorSize = height/5;
+        this.equatorSize = height / 5;
         equatorStart = (height - equatorSize) / 2;
 
         initializeGrassPlaces();
@@ -25,7 +24,7 @@ public class RequiredGrassField extends GrassField {
 
     @Override
     public boolean isPriorityPosition(Vector2d position) {
-        return  (position.y() >= equatorStart && position.y() < equatorStart + equatorSize);
+        return (position.y() >= equatorStart && position.y() < equatorStart + equatorSize);
     }
 
     @Override
@@ -34,7 +33,8 @@ public class RequiredGrassField extends GrassField {
         Vector2d newPosition;
         try {
             if (isOnEquator) {
-                if (availablePriorityPositions.isEmpty()) { addGrass();
+                if (availablePriorityPositions.isEmpty()) {
+                    addGrass();
                     return;
                     //throw new GrassSetFullException("No more positions in the priority available to place grass.");
                 }
@@ -50,11 +50,10 @@ public class RequiredGrassField extends GrassField {
                 availableNonPriorityPositions.remove(newPosition);
             }
             grasses.put(newPosition, new Grass(newPosition));
-        } catch (GrassSetFullException e) {
+        } catch (GrassSetFullException e) { // wyjątek krótkodystansowy
             System.out.println(e.getMessage());
         }
     }
-
 
 
 }

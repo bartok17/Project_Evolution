@@ -11,10 +11,8 @@ public enum MapDirection {
     NORTH_WEST;
 
 
-    public String toString()
-    {
-        return switch (this)
-        {
+    public String toString() {
+        return switch (this) {
             case EAST -> "E";
             case WEST -> "W";
             case NORTH -> "N";
@@ -25,10 +23,9 @@ public enum MapDirection {
             case SOUTH_WEST -> "SW";
         };
     }
-    public MapDirection next()
-    {
-        return switch (this)
-        {
+
+    public MapDirection next() {
+        return switch (this) {
             case NORTH -> NORTH_EAST;
             case NORTH_EAST -> EAST;
             case EAST -> SOUTH_EAST;
@@ -39,10 +36,9 @@ public enum MapDirection {
             case NORTH_WEST -> NORTH;
         };
     }
-    public MapDirection previous()
-    {
-        return switch (this)
-        {
+
+    public MapDirection previous() {
+        return switch (this) {
             case NORTH -> NORTH_WEST;
             case NORTH_WEST -> WEST;
             case WEST -> SOUTH_WEST;
@@ -55,18 +51,16 @@ public enum MapDirection {
         };
     }
 
-    public Vector2d toUnitVector()
-    {
-        return switch (this)
-        {
-            case EAST -> new Vector2d(1,0);
-            case WEST -> new Vector2d(-1,0);
-            case NORTH -> new Vector2d(0,1);
-            case SOUTH -> new Vector2d(0,-1);
-            case NORTH_EAST -> new Vector2d(1,1);
-            case NORTH_WEST -> new Vector2d(-1,1);
-            case SOUTH_EAST -> new Vector2d(1,-1);
-            case SOUTH_WEST -> new Vector2d(-1,-1);
+    public Vector2d toUnitVector() {
+        return switch (this) {
+            case EAST -> new Vector2d(1, 0); // nowy obiekt co wywołanie?
+            case WEST -> new Vector2d(-1, 0);
+            case NORTH -> new Vector2d(0, 1);
+            case SOUTH -> new Vector2d(0, -1);
+            case NORTH_EAST -> new Vector2d(1, 1);
+            case NORTH_WEST -> new Vector2d(-1, 1);
+            case SOUTH_EAST -> new Vector2d(1, -1);
+            case SOUTH_WEST -> new Vector2d(-1, -1);
         };
     }
 

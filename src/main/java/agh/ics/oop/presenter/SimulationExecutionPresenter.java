@@ -30,7 +30,7 @@ import java.util.Optional;
 import static com.sun.webkit.graphics.WCGraphicsManager.getResourceName;
 
 public class SimulationExecutionPresenter implements MapChangeListener {
-    private  float CELL_HEIGHT;
+    private float CELL_HEIGHT;
 
     @FXML
     private Button speedUpButton;
@@ -87,10 +87,10 @@ public class SimulationExecutionPresenter implements MapChangeListener {
 
     private Animal observedAnimal;
 
-    public void setWorldMap(GrassField worldMap,Simulation simulation) {
+    public void setWorldMap(GrassField worldMap, Simulation simulation) {
         this.simulation = simulation;
         this.worldMap = worldMap;
-        this.CELL_HEIGHT =  (float) 800/worldMap.getHeight();
+        this.CELL_HEIGHT = (float) 800 / worldMap.getHeight();
     }
 
     private void drawMap() {
@@ -104,7 +104,7 @@ public class SimulationExecutionPresenter implements MapChangeListener {
         averageChildren.setText("Avg. Children: " + worldMap.getAvgChildren());
         turn.setText("Turn: " + simulation.getTurn());
 
-        if(observedAnimal != null) {
+        if (observedAnimal != null) {
             name.setText("Name: " + observedAnimal.getName());
             genome.setText("Genome: " + Arrays.toString(observedAnimal.getGens()));
             genomePart.setText("Genome Part: " + observedAnimal.getCurrentGen());
@@ -121,7 +121,6 @@ public class SimulationExecutionPresenter implements MapChangeListener {
         AbstractWorldMap.Boundary boundary = worldMap.getCurrentBounds();
 
 
-
         for (int x = 0; x <= boundary.upperRight().x(); x++) {
             for (int y = 0; y <= boundary.upperRight().y(); y++) {
                 if (x == 0) mapGrid.getRowConstraints().add(new RowConstraints(CELL_HEIGHT));
@@ -131,13 +130,11 @@ public class SimulationExecutionPresenter implements MapChangeListener {
 
                 for (int i = 0; i < object.size(); i++) {
                     WorldElementBox label;
-                    if(i == object.size() -1 && object.get(i) instanceof Animal animal)
-                    {
-                        label = new WorldElementBox(object.get(i),CELL_HEIGHT,true);
+                    if (i == object.size() - 1 && object.get(i) instanceof Animal animal) {
+                        label = new WorldElementBox(object.get(i), CELL_HEIGHT, true);
                         label.setOnMouseClicked(event -> onAnimalEnter(animal));
-                    }
-                    else {
-                         label = new WorldElementBox(object.get(i),CELL_HEIGHT);
+                    } else {
+                        label = new WorldElementBox(object.get(i), CELL_HEIGHT);
                     }
                     mapGrid.add(label, x + 1, y + 1);
                     GridPane.setHalignment(label, HPos.CENTER);
@@ -171,13 +168,9 @@ public class SimulationExecutionPresenter implements MapChangeListener {
         markView.setFitWidth(CELL_HEIGHT);
 
 
+        mapGrid.add(markView, observedAnimal.getPosition().x() + 1, observedAnimal.getPosition().y() + 1);
 
-
-
-
-        mapGrid.add(markView, observedAnimal.getPosition().x()+1, observedAnimal.getPosition().y()+1);
-
-    }
+    } // przerośnięta metoda
 
     private void clearGrid() {
         mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0));
@@ -193,7 +186,7 @@ public class SimulationExecutionPresenter implements MapChangeListener {
 
 
     public void onSimulationPaused(ActionEvent actionEvent) {
-        if(!simulation.getPaused())
+        if (!simulation.getPaused())
             simulation.pause();
         else
             simulation.resume();
@@ -215,6 +208,7 @@ public class SimulationExecutionPresenter implements MapChangeListener {
         drawMap();
 
     }
+
     public void onAnimalEnter(Animal animal) {
 
         infoPanelAnimal.setVisible(true);

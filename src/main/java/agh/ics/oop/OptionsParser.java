@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OptionsParser {
+public class OptionsParser { // czy to jest używane?
     public static List<MoveDirection> ParseMoveDirection(String[] Directions) {
         return Arrays.stream(Directions)
                 .map(direction -> switch (direction.toLowerCase()) {

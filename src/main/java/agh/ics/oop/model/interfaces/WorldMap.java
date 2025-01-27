@@ -1,4 +1,3 @@
-
 package agh.ics.oop.model.interfaces;
 
 import agh.ics.oop.model.AbstractWorldMap;
@@ -17,8 +16,7 @@ import java.util.Optional;
  *
  * @author apohllo, idzik
  */
-public interface WorldMap extends MoveValidator {
-
+public interface WorldMap extends MoveValidator { // czy to jest używane?
 
 
     /**
@@ -52,8 +50,11 @@ public interface WorldMap extends MoveValidator {
      * @return animal or null if the position is not occupied.
      */
     Optional<WorldElement> objectAt(Vector2d position);
+
     List<WorldElement> objectsAt(Vector2d position);
+
     AbstractWorldMap.Boundary getCurrentBounds();
+
     @Override
     String toString();
 

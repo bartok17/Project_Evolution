@@ -23,6 +23,7 @@ public class SimulationApp extends Application {
 
         primaryStage.show();
     }
+
     private void configureStage(Stage primaryStage, BorderPane viewRoot) {
         var scene = new Scene(viewRoot);
         primaryStage.setScene(scene);

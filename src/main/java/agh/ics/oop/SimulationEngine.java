@@ -8,20 +8,21 @@ import java.util.concurrent.TimeUnit;
 
 public class SimulationEngine {
 
-    private ExecutorService executorService;
+    private ExecutorService executorService; // to nie jest final?
 
     private final List<Simulation> simulations;
     private final List<Thread> threads = new ArrayList<>();
+
     public SimulationEngine(List<Simulation> simulations) {
-       this.simulations = simulations;
+        this.simulations = simulations;
     }
-    public void runSync()
-    {
-        for (Simulation simulation : simulations)
-        {
-           simulation.run();
+
+    public void runSync() {
+        for (Simulation simulation : simulations) {
+            simulation.run();
         }
     }
+
     public void runAsync() {
 
         for (Simulation simulation : simulations) {
@@ -32,6 +33,7 @@ public class SimulationEngine {
         }
 
     }
+
     public void runAsyncInThreadPool() {
         executorService = Executors.newFixedThreadPool(16);
         for (Simulation simulation : simulations) {
@@ -40,7 +42,7 @@ public class SimulationEngine {
 
     }
 
-    public void awaitSimulationsEnd() throws InterruptedException {
+    public void awaitSimulationsEnd() throws InterruptedException { // nieprawda, nie rzuca
         if (executorService != null) {
             executorService.shutdown();
             try {
@@ -50,14 +52,12 @@ public class SimulationEngine {
             } catch (InterruptedException e) {
                 executorService.shutdownNow();
             }
-        }
-        else
-        {
+        } else {
             for (Thread thread : threads) {
                 try {
                     thread.join();
                 } catch (InterruptedException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println(e.getMessage()); // czy to dobry wybór?
                 }
             }
         }

@@ -5,12 +5,14 @@ import javafx.scene.image.Image;
 
 import java.util.HashMap;
 
-public class BackgroundTile implements WorldElement {
-    final static private HashMap<String, Image> images = new  HashMap<String,Image>();
+public class BackgroundTile implements WorldElement { // co to reprezentuje?
+    final static private HashMap<String, Image> images = new HashMap<String, Image>();
     final private Vector2d position;
+
     public Vector2d getPosition() {
         return position;
     }
+
     public BackgroundTile(Vector2d position) {
         this.position = position;
     }
@@ -18,15 +20,13 @@ public class BackgroundTile implements WorldElement {
 
     @Override
     public boolean isAt(Vector2d coordinates) {
-        return false;
+        return false; // que?
     }
 
     @Override
-    public Image getImage()
-    {
-        if(!images.containsKey("backgroundTile.png"))
-        {
-            images.put("backgroundTile.png",new Image(getResourceName()));
+    public Image getImage() {
+        if (!images.containsKey("backgroundTile.png")) {
+            images.put("backgroundTile.png", new Image(getResourceName()));
         }
         return images.get("backgroundTile.png");
     }

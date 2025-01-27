@@ -36,7 +36,7 @@
                   alignment="CENTER_LEFT"
                   spacing="10"
                   visible="false">
-                <Label text="Animal Info" style="-fx-font-weight: bold;" />
+                <Label text="Animal Info" style="-fx-font-weight: bold;"/>
                 <Label fx:id="name" text="Name: "/>
                 <Label fx:id="genome" text="genome: " wrapText="true"/>
                 <Label fx:id="genomePart" text="Active Part: "/>
@@ -63,7 +63,7 @@
             <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER"/>
             <Button fx:id="pauseButton" text="Pause/Unpause" onAction="#onSimulationPaused"/>
             <HBox>
-            <Button fx:id="speedUpButton" text="Speed Up" onAction="#onSimulationSpeedUp"/>
+                <Button fx:id="speedUpButton" text="Speed Up" onAction="#onSimulationSpeedUp"/>
                 <Button fx:id="speedDownButton" text="Speed Down" onAction="#onSimulationSpeedDown"/>
             </HBox>
 

@@ -10,12 +10,11 @@ import java.io.IOException;
 public class FileMapDisplay implements MapChangeListener {
     @Override
     public void onMapChanged(WorldMap worldMap, String message) {
-        String fileName = "map_" + worldMap.getId()+".log";
-        String toAppend ="Mapa o Id: " + worldMap.getId() + "\n"
+        String fileName = "map_" + worldMap.getId() + ".log";
+        String toAppend = "Mapa o Id: " + worldMap.getId() + "\n"
                 + message + "\n"
                 + worldMap + "\n"
-                +"\n";
-
+                + "\n";
 
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {

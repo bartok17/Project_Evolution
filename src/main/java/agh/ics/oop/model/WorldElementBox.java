@@ -1,4 +1,4 @@
-package agh.ics.oop.model;
+package agh.ics.oop.model; // to nie jest model
 
 import agh.ics.oop.model.interfaces.WorldElement;
 import javafx.geometry.Pos;
@@ -10,20 +10,21 @@ import javafx.scene.text.Font;
 
 public class WorldElementBox extends VBox {
 
-    public WorldElementBox(WorldElement worldElement,float imageSize) {
-        this(worldElement,imageSize,false);
+    public WorldElementBox(WorldElement worldElement, float imageSize) {
+        this(worldElement, imageSize, false);
 
     }
-    public WorldElementBox(WorldElement element,float imageSize,boolean isLabel) {
+
+    public WorldElementBox(WorldElement element, float imageSize, boolean isLabel) {
         Image image = element.getImage();
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(imageSize);
         imageView.setFitHeight(imageSize);
 
 
-        if(isLabel) {
+        if (isLabel) {
             Label infoLabel = new Label(element.getInfo());
-            infoLabel.setFont(new Font(imageSize /4));
+            infoLabel.setFont(new Font(imageSize / 4));
             this.getChildren().addAll(infoLabel);
         }
         this.getChildren().addAll(imageView);

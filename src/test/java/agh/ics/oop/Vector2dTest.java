@@ -44,7 +44,7 @@ class Vector2dTest {
         Vector2d vector2d2 = new Vector2d(2, 2);
         Vector2d vector2d3 = new Vector2d(1, 4);
         Vector2d vector2d4 = new Vector2d(2, 4);
-        Vector2d vector2d5 = new Vector2d(0 ,0);
+        Vector2d vector2d5 = new Vector2d(0, 0);
 
         //then
         assertTrue(vector2d.precedes(vector2d));
@@ -78,7 +78,7 @@ class Vector2dTest {
         //Given
         Vector2d vector2d = new Vector2d(1, 2);
         Vector2d vector2d2 = new Vector2d(2, -2);
-        Vector2d vector2dResult = new Vector2d(3,0 );
+        Vector2d vector2dResult = new Vector2d(3, 0);
 
         //then
 
@@ -92,7 +92,7 @@ class Vector2dTest {
         //Given
         Vector2d vector2d = new Vector2d(1, 2);
         Vector2d vector2d2 = new Vector2d(2, -2);
-        Vector2d vector2dResult = new Vector2d(-1,4 );
+        Vector2d vector2dResult = new Vector2d(-1, 4);
 
         //then
         assertEquals(vector2dResult.x(), vector2d.subtract(vector2d2).x());
@@ -104,7 +104,7 @@ class Vector2dTest {
         //Given
         Vector2d vector2d = new Vector2d(1, 2);
         Vector2d vector2d2 = new Vector2d(2, -2);
-        Vector2d vector2dResult = new Vector2d(2,2);
+        Vector2d vector2dResult = new Vector2d(2, 2);
         //then
         assertEquals(vector2dResult.x(), vector2d.upperRight(vector2d2).x());
         assertEquals(vector2dResult.y(), vector2d.upperRight(vector2d2).y());
@@ -115,7 +115,7 @@ class Vector2dTest {
         //Given
         Vector2d vector2d = new Vector2d(1, 2);
         Vector2d vector2d2 = new Vector2d(2, -2);
-        Vector2d vector2dResult = new Vector2d(1,-2);
+        Vector2d vector2dResult = new Vector2d(1, -2);
         //then
         assertEquals(vector2dResult.x(), vector2d.lowerLeft(vector2d2).x());
         assertEquals(vector2dResult.y(), vector2d.lowerLeft(vector2d2).y());
@@ -136,12 +136,12 @@ class Vector2dTest {
     @Test
     void testEquals() {
         //Given
-Vector2d vector2d = new Vector2d(1, 2);
-Vector2d vector2d2 = new Vector2d(2, -2);
-Vector2d vector2d3 = new Vector2d(1, 2);
+        Vector2d vector2d = new Vector2d(1, 2);
+        Vector2d vector2d2 = new Vector2d(2, -2);
+        Vector2d vector2d3 = new Vector2d(1, 2);
 
         //then
-       
+
         assertFalse(vector2d.equals(vector2d2));
         assertTrue(vector2d.equals(vector2d3));
     }

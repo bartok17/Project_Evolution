@@ -1,12 +1,18 @@
 package agh.ics.oop.model;
 
-public abstract class AbstractMapMovementLogistic {
+public abstract class AbstractMapMovementLogistic { // Logistic?
 
     protected GrassField grassField;
-    GrassField getGrassField() {return grassField;}
-    public void setGrassField(GrassField grassField) {this.grassField = grassField;}
 
-    public AbstractMapMovementLogistic() {
+    GrassField getGrassField() {
+        return grassField;
+    }
+
+    public void setGrassField(GrassField grassField) {
+        this.grassField = grassField;
+    }
+
+    public AbstractMapMovementLogistic() { // pusto tu
 
     }
 

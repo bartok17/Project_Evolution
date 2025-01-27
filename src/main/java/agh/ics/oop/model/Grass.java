@@ -6,11 +6,13 @@ import javafx.scene.image.Image;
 import java.util.HashMap;
 
 public class Grass implements WorldElement {
-    final static private HashMap<String, Image> images = new  HashMap<String,Image>();
+    final static private HashMap<String, Image> images = new HashMap<String, Image>();
     final private Vector2d position;
+
     public Vector2d getPosition() {
         return position;
     }
+
     public Grass(Vector2d position) {
         this.position = position;
     }
@@ -22,11 +24,9 @@ public class Grass implements WorldElement {
     }
 
     @Override
-    public Image getImage()
-    {
-        if(!images.containsKey("grass-2.png"))
-        {
-            images.put("grass-2.png",new Image(getResourceName()));
+    public Image getImage() {
+        if (!images.containsKey("grass-2.png")) { // czemu tu jest inna nazwa niż zwraca getResourceName?
+            images.put("grass-2.png", new Image(getResourceName()));
         }
         return images.get("grass-2.png");
     }

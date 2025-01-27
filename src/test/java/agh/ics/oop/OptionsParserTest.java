@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class OptionsParserTest {
 
 
-
     //Tests Obsolete, New ones are not need since everything is checked in SimulationTests
    /* @Test
 
@@ -24,4 +23,4 @@ class OptionsParserTest {
         assertEquals(correctResult, result);
         }
 */
-    }
+}

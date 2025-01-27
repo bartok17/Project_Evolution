@@ -6,10 +6,12 @@ import agh.ics.oop.model.interfaces.WorldMap;
 
 public class ConsoleMapDisplay implements MapChangeListener {
 
-    private  int moveCount = 0;
-    public int getMoveCount(){
+    private int moveCount = 0;
+
+    public int getMoveCount() {
         return moveCount;
     }
+
     @Override
     synchronized public void onMapChanged(WorldMap worldMap, String message) {
         synchronized (System.out) {

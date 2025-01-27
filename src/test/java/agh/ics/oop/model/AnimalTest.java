@@ -45,7 +45,7 @@ class AnimalTest {
     void testInitializeGenes() {
         Animal animalWithGenes = new Animal(
                 new Vector2d(0, 0), 8, 1, 3, true, 100, "neodymium",
-                new int[]{0, 1, 2, 3,4,5,6,7}, new int[]{0,1,2,3,4, 5, 6, 7}, 2
+                new int[]{0, 1, 2, 3, 4, 5, 6, 7}, new int[]{0, 1, 2, 3, 4, 5, 6, 7}, 2
         );
 
         int[] genes = animalWithGenes.getGens();
@@ -63,11 +63,9 @@ class AnimalTest {
         );
 
 
-
-
         animalWithMutation.useGen();
 
-        assertNotEquals(animalWithoutMutation, animalWithMutation.getGens(), "Genes shouldn't be the same after mutation, possible random failure caused by luck, multiple tries suggested :)");
+        assertNotEquals(animalWithoutMutation, animalWithMutation.getGens(), "Genes shouldn't be the same after mutation, possible random failure caused by luck, multiple tries suggested :)"); // to niekoniecznie dobrze
     }
 
 

@@ -51,23 +51,20 @@ public record Vector2d(int x, int y) implements Comparable<Vector2d> {
 
 
     }
+
     @Override
     public int compareTo(Vector2d other) {
         int xCompare = Integer.compare(this.x, other.x);
         if (xCompare != 0) {
             return xCompare;
         }
-        return Integer.compare(this.y, other.y);
+        return Integer.compare(this.y, other.y); // czy to jest relacja porządku?
     }
 
 
-
-
-
-
     public static Vector2d random(AbstractWorldMap.Boundary boundary) {
-        Random random = new Random();
-        return new Vector2d(random.nextInt(boundary.lowerLeft().x,boundary.upperRight().x), random.nextInt(boundary.lowerLeft().y,boundary.upperRight().x));
+        Random random = new Random(); // nowy obiekt co wywołanie?
+        return new Vector2d(random.nextInt(boundary.lowerLeft().x, boundary.upperRight().x), random.nextInt(boundary.lowerLeft().y, boundary.upperRight().x));
 
     }
 }

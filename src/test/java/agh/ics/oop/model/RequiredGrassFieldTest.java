@@ -3,6 +3,7 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.Exceptions.GrassSetFullException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RequiredGrassFieldTest {

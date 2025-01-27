@@ -34,7 +34,6 @@ public class MapVisualizer {
      * indices of the map will have no more than two characters (including the
      * sign).
      *
-
      * @param boundary Boundaries of the map that will be drawn
      * @return String representation of the selected region of the map.
      */

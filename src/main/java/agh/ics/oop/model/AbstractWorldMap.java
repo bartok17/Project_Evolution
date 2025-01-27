@@ -14,22 +14,28 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     private int deadAnimals = 0;
     private int deadLifeSpan = 0;
-    public void addDeadAnimal(int lifeSpan) {deadAnimals++;
-    deadLifeSpan += lifeSpan;}
+
+    public void addDeadAnimal(int lifeSpan) { // nazwa metody się kłóci z typem parametru
+        deadAnimals++;
+        deadLifeSpan += lifeSpan;
+    }
+
     public int getAvgDeadAnimals() {
-        if(deadAnimals == 0) return 0;
-        return deadLifeSpan /deadAnimals;}
+        if (deadAnimals == 0) return 0;
+        return deadLifeSpan / deadAnimals;
+    }
 
 
-    private final List<MapChangeListener> listeners = new ArrayList<>();
+    private final List<MapChangeListener> listeners = new ArrayList<>(); // atrybut między metodami
 
     protected AbstractWorldMap(int mapId) {
         this.mapId = mapId;
     }
 
-    public record Boundary(Vector2d lowerLeft, Vector2d upperRight) {}
+    public record Boundary(Vector2d lowerLeft, Vector2d upperRight) {
+    }
 
-    protected final Map<Vector2d,List<Animal>> animals = new HashMap<>();
+    protected final Map<Vector2d, List<Animal>> animals = new HashMap<>();
 
     protected MapVisualizer mapVisualizer;
 
@@ -37,11 +43,12 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public void place(Animal animal) throws IncorrectPositionException {
 
-            animals.computeIfAbsent(animal.getPosition(), k -> new ArrayList<>()).add(animal);
-            notifyListeners("Zwierze postawione na " + animal.getPosition());
+        animals.computeIfAbsent(animal.getPosition(), k -> new ArrayList<>()).add(animal);
+        notifyListeners("Zwierze postawione na " + animal.getPosition());
 
 
     }
+
     public void removeAnimal(Animal animal, Vector2d position) {
         List<Animal> oldList = animals.get(position);
         if (oldList != null) {
@@ -51,6 +58,7 @@ public abstract class AbstractWorldMap implements WorldMap {
             }
         }
     }
+
     @Override
     public void move(Animal animal, MoveDirection direction) {
         Vector2d oldPosition = animal.getPosition();
@@ -60,7 +68,6 @@ public abstract class AbstractWorldMap implements WorldMap {
         animals.computeIfAbsent(animal.getPosition(), k -> new ArrayList<>()).add(animal);
         notifyListeners("Zwierze porusza się z pozycji " + oldPosition + " do " + animal.getPosition());
     }
-
 
 
     @Override
@@ -79,7 +86,8 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public List<WorldElement> objectsAt(Vector2d position) {
         List<WorldElement> objects = new ArrayList<>();
-        if (isOccupied(position)) {objects.add(animals.get(position).get(0));
+        if (isOccupied(position)) {
+            objects.add(animals.get(position).get(0));
         }
         return objects;
     }
@@ -90,8 +98,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return mapVisualizer.draw(getCurrentBounds());
     }
 
@@ -107,13 +114,15 @@ public abstract class AbstractWorldMap implements WorldMap {
     public void addListener(MapChangeListener listener) {
         listeners.add(listener);
     }
+
     public void removeListener(MapChangeListener listener) {
         listeners.remove(listener);
     }
+
     void notifyListeners(String message) {
 
         for (MapChangeListener listener : listeners) {
-            listener.onMapChanged(this,message);
+            listener.onMapChanged(this, message);
         }
     }
 
@@ -124,37 +133,38 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public List<Animal> getOrderedAnimals() {
-        return  animals.values().stream()
+        return animals.values().stream()
                 .flatMap(List::stream)
                 .sorted()
                 .collect(Collectors.toList());
 
     }
+
     public List<Animal> getOrderedAnimals(Vector2d position) {
 
-        if(!animals.containsKey(position)) return new ArrayList<>();
-        if(animals.get(position).isEmpty()) return new ArrayList<>();
-        return  animals.get(position).stream()
+        if (!animals.containsKey(position)) return new ArrayList<>();
+        if (animals.get(position).isEmpty()) return new ArrayList<>();
+        return animals.get(position).stream()
                 .sorted()
                 .collect(Collectors.toList());
 
     }
-    public int getAvgEnergy()
-    {
+
+    public int getAvgEnergy() {
         List<Animal> animals = getOrderedAnimals();
         int totalEnergy = 0;
         for (Animal animal : animals) {
             totalEnergy += animal.getEnergy();
         }
-        return totalEnergy/animals.size();
+        return totalEnergy / animals.size();
     }
-    public int getAvgChildren()
-    {
+
+    public int getAvgChildren() { // czy to zadanie dla mapy?
         List<Animal> animals = getOrderedAnimals();
         int totalChildren = 0;
         for (Animal animal : animals) {
             totalChildren += animal.getChildren();
         }
-        return totalChildren/animals.size();
+        return totalChildren / animals.size();
     }
 }
