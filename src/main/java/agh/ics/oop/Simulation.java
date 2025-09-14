@@ -16,15 +16,20 @@ public class Simulation implements Runnable {
     private boolean running = true;
     private boolean paused = false;
 
+    // Returns current number of animals in simulation
     public int getAnimalCount(){return animals.size();}
+    // Returns current number of grass tiles on the map
     public int getGrassCount(){return worldMap.getGrassCount();}
 
     private int speed = 5;
+    // Increases simulation speed (lower sleep time)
     public void increaseSpeed() {speed--;
         if (speed <= 0) speed = 1;}
+    // Decreases simulation speed (higher sleep time)
     public void decreaseSpeed() {speed++;
         if (speed >= 10) speed = 10;
    }
+    // Returns whether simulation is paused
     public boolean getPaused() {return paused;}
 
     final NameGenerator nameGenerator = new NameGenerator();
@@ -41,6 +46,8 @@ public class Simulation implements Runnable {
     final int energyToReproduce;
     final int startingEnergy;
     final int energyReproductionCost;
+
+    // Creates initial population and sets parameters
     public Simulation(int animalCount,GrassField worldMap,int genSize,int minMutations,int maxMutations,int energyToReproduce,int energyReproductionCost,int startingEnergy,int grassSpawn) {
         this.genSize = genSize;
         this.worldMap = worldMap;
@@ -75,8 +82,11 @@ public class Simulation implements Runnable {
         }
 
     }
+
+    // Executes a single simulation turn (death, move, eat, reproduce, spawn grass)
     public void executeTurn()
     {
+        // Remove dead animals
         for (int i = 0; i < animals.size(); i++) {
 
             if(animals.get(i).getEnergy() <= 0)
@@ -85,16 +95,16 @@ public class Simulation implements Runnable {
             }
         }
 
+        // Move, use gene, and age each animal
         for (Animal animal : animals) {
-
 
             worldMap.move(animal,MoveDirection.FORWARD);
             animal.useGen();
             animal.ageAnimal();
 
-
-
         }
+
+        // Eating phase (strongest animal on a tile eats grass)
         for (int y = 0; y < worldMap.getHeight();y++)
         {
             for (int x = 0; x < worldMap.getWidth(); x++) {
@@ -113,20 +123,23 @@ public class Simulation implements Runnable {
             }
         }
 
+        // Reproduction phase
         for (int y = 0; y < worldMap.getHeight();y++)
         {
             for (int x = 0; x < worldMap.getWidth(); x++) {
 
                 reproduce(new Vector2d(x,y));
 
-
             }
         }
+
+        // Spawn new grass and advance turn counter
         for (int i = 0; i < grassSpawn;i++)
             worldMap.addGrass();
         turn++;
     }
 
+    // Tries to reproduce two strongest animals at position
     private void reproduce(Vector2d pos)
     {
         List<Animal> animalList = worldMap.getOrderedAnimals(pos);
@@ -163,10 +176,11 @@ public class Simulation implements Runnable {
                     System.out.println(e.getMessage());
                 }
 
-
             }
         }
     }
+
+    // Removes animal from simulation and records death
     private void kill(Animal animal)
     {
          animals.remove(animal);
@@ -177,19 +191,22 @@ public class Simulation implements Runnable {
     }
 
     private int turn = 0;
+    // Returns current turn number
     public int getTurn() {return turn;}
 
-
-
+    // Signals simulation loop to stop
     public void exit()
     {
         running = false;
     }
+
+    // Pauses simulation loop
     public void pause() {
         paused = true;
         System.out.println("Simulation paused");
     }
 
+    // Resumes simulation loop
     public void resume() {
         synchronized (pauseLock) {
             paused = false;
@@ -197,8 +214,9 @@ public class Simulation implements Runnable {
         }
         System.out.println("Simulation resumed");
     }
-    @Override
 
+    @Override
+    // Main simulation loop (ticks with sleep; supports pause/resume/exit)
     public void run()
     {
         System.out.println("Simulation started");
