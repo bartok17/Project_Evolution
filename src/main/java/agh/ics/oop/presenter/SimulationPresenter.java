@@ -2,20 +2,16 @@ package agh.ics.oop.presenter;
 
 import agh.ics.oop.Simulation;
 import agh.ics.oop.model.*;
-
 import agh.ics.oop.model.interfaces.MapChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,11 +26,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SimulationPresenter implements Initializable {
+
     private static final int MAX_SIMULTANEOUS_SIMULATIONS = 4;
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(MAX_SIMULTANEOUS_SIMULATIONS);
+    private static final ExecutorService executorService =
+            Executors.newFixedThreadPool(MAX_SIMULTANEOUS_SIMULATIONS);
+
     public TextField presetName;
     public Button savePreset;
-    public ComboBox<String > fileSelector;
+    public ComboBox<String> fileSelector;
+
     @FXML
     private TextField geneLength;
     @FXML
@@ -57,37 +57,36 @@ public class SimulationPresenter implements Initializable {
     private TextField startingEnergy;
     @FXML
     private TextField startingAnimals;
-
     @FXML
     private TextField grassFrequency;
     @FXML
     private TextField grassEnergy;
     @FXML
     private TextField startingGrass;
-
     @FXML
     private Button startButton;
     @FXML
     private TextField mapHeightField;
     @FXML
     private TextField mapWidthField;
-    private int lastIndex = 1;
 
+    private int lastIndex = 1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Add items to the ComboBox
         mapType.getItems().addAll("O", "A");
         grassFieldType.getItems().addAll("O");
-        mutationType.getItems().addAll("0","2");
+        mutationType.getItems().addAll("0", "2");
         animalType.getItems().addAll("O");
+
         mapType.setValue("O");
         grassFieldType.setValue("O");
         mutationType.setValue("0");
         animalType.setValue("O");
-        checkAllValues();
 
+        checkAllValues();
         loadTxtFilesFromFolder("/saves");
+
         fileSelector.setOnAction(event -> {
             String selectedFile = fileSelector.getValue();
             if (selectedFile != null) {
@@ -97,40 +96,42 @@ public class SimulationPresenter implements Initializable {
         });
     }
 
-
     private void checkAllValues() {
-        //Remember to use only already checked variables for reference to next variables
-        checkMinMaxValues(mapHeightField,5,100);
-        checkMinMaxValues(mapWidthField,5,100);
-        checkMinMaxValues(startingAnimals,1, getHeight() * getWidth() / 2 );
-        checkMinMaxValues(startingEnergy,1,10000);
-        checkMinMaxValues(startingGrass,0, getHeight() * getWidth());
-        checkMinMaxValues(reproductionCost,1 ,10000);
-        checkMinMaxValues(energyToReproduce,Integer.parseInt(reproductionCost.getText()) ,10000);
-        checkMinMaxValues(minMutation,0,10000);
-        checkMinMaxValues(maxMutation,Integer.parseInt(minMutation.getText())+1,10000);
-        checkMinMaxValues(grassFrequency,1,getHeight() * getWidth());
-        checkMinMaxValues(grassEnergy,1,10000);
-        checkMinMaxValues(geneLength,1,100);
-
-
+        // Remember to use only already checked variables for reference to next variables
+        checkMinMaxValues(mapHeightField, 5, 100);
+        checkMinMaxValues(mapWidthField, 5, 100);
+        checkMinMaxValues(startingAnimals, 1, getHeight() * getWidth() / 2);
+        checkMinMaxValues(startingEnergy, 1, 10000);
+        checkMinMaxValues(startingGrass, 0, getHeight() * getWidth());
+        checkMinMaxValues(reproductionCost, 1, 10000);
+        checkMinMaxValues(energyToReproduce, Integer.parseInt(reproductionCost.getText()), 10000);
+        checkMinMaxValues(minMutation, 0, 10000);
+        checkMinMaxValues(maxMutation, Integer.parseInt(minMutation.getText()) + 1, 10000);
+        checkMinMaxValues(grassFrequency, 1, getHeight() * getWidth());
+        checkMinMaxValues(grassEnergy, 1, 10000);
+        checkMinMaxValues(geneLength, 1, 100);
     }
+
     private void checkMinMaxValues(TextField field, int min, int max) {
-        if(field.textProperty().get().isEmpty())
+        if (field.textProperty().get().isEmpty()) {
             field.textProperty().setValue(String.valueOf(min));
-        if (!field.textProperty().get().matches("\\d+"))
+        }
+        if (!field.textProperty().get().matches("\\d+")) {
             field.textProperty().setValue(String.valueOf(min));
-        if (Integer.parseInt(field.textProperty().get()) > max)
+        }
+        if (Integer.parseInt(field.textProperty().get()) > max) {
             field.textProperty().setValue(String.valueOf(max));
-        if (Integer.parseInt(field.textProperty().get()) < min)
+        }
+        if (Integer.parseInt(field.textProperty().get()) < min) {
             field.textProperty().setValue(String.valueOf(min));
+        }
     }
-    private int getHeight()
-    {
+
+    private int getHeight() {
         return Integer.parseInt(mapHeightField.getText());
     }
-    private int getWidth()
-    {
+
+    private int getWidth() {
         return Integer.parseInt(mapWidthField.getText());
     }
 
@@ -139,69 +140,79 @@ public class SimulationPresenter implements Initializable {
         try {
             int height = Integer.parseInt(mapHeightField.getText());
             int width = Integer.parseInt(mapWidthField.getText());
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("simulationResult.fxml"));
-            BorderPane simulationRoot = loader.load();
 
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getClassLoader().getResource("simulationResult.fxml"));
+            BorderPane simulationRoot = loader.load();
             SimulationExecutionPresenter newPresenter = loader.getController();
 
             AbstractMapMovementLogistic movementLogistic = new NormalMapMovementLogistic();
-            if (mapType.getValue().equals("A")) { movementLogistic = new PoleMapMovementLogistic(); }
+            if (mapType.getValue().equals("A")) {
+                movementLogistic = new PoleMapMovementLogistic();
+            }
             boolean geneSwap = mapType.getValue().equals("2");
 
-
-            //here implement logic if more than just one grass logic is implemented. Currently, it will always choose one as there is only one :)
-            GrassField newWorldMap = new RequiredGrassField(width,height,Integer.parseInt(startingGrass.getText()),geneSwap,
-                    Integer.parseInt(grassEnergy.getText()), lastIndex,movementLogistic);
+            GrassField newWorldMap = new RequiredGrassField(
+                    width,
+                    height,
+                    Integer.parseInt(startingGrass.getText()),
+                    geneSwap,
+                    Integer.parseInt(grassEnergy.getText()),
+                    lastIndex,
+                    movementLogistic
+            );
 
             lastIndex++;
-            Simulation simulation = new Simulation(Integer.parseInt(startingAnimals.getText()), newWorldMap,Integer.parseInt(geneLength.getText()),
-                    Integer.parseInt(minMutation.getText()),Integer.parseInt(maxMutation.getText())
-                    ,Integer.parseInt(energyToReproduce.getText()),Integer.parseInt(reproductionCost.getText()),
-                    Integer.parseInt(startingEnergy.getText()),Integer.parseInt(grassFrequency.getText()));
 
-            newPresenter.setWorldMap(newWorldMap,simulation);
+            Simulation simulation = new Simulation(
+                    Integer.parseInt(startingAnimals.getText()),
+                    newWorldMap,
+                    Integer.parseInt(geneLength.getText()),
+                    Integer.parseInt(minMutation.getText()),
+                    Integer.parseInt(maxMutation.getText()),
+                    Integer.parseInt(energyToReproduce.getText()),
+                    Integer.parseInt(reproductionCost.getText()),
+                    Integer.parseInt(startingEnergy.getText()),
+                    Integer.parseInt(grassFrequency.getText())
+            );
+
+            newPresenter.setWorldMap(newWorldMap, simulation);
             newWorldMap.addListener(newPresenter);
 
             MapChangeListener loggingObserver = (map, message) -> {
-                String datetime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                String datetime =
+                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 System.out.println(datetime + " " + message);
             };
             newWorldMap.addListener(loggingObserver);
 
             Stage simulationStage = new Stage();
-            simulationStage.setOnCloseRequest(event -> {
-                simulation.exit();
-            });
-
+            simulationStage.setOnCloseRequest(event -> simulation.exit());
             simulationStage.setScene(new Scene(simulationRoot));
             simulationStage.setTitle("Simulation");
             simulationStage.show();
 
             executorService.submit(simulation);
-
-
         } catch (IOException e) {
             System.out.println("Cant load the simulation: " + e.getMessage());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
-
     private void loadTxtFilesFromFolder(String folderPath) {
-       Path folder = Paths.get(System.getProperty("user.dir") ,folderPath);
-
+        Path folder = Paths.get(System.getProperty("user.dir"), folderPath);
 
         if (!Files.exists(folder)) {
             try {
-               Files.createDirectories(folder);
+                Files.createDirectories(folder);
                 System.out.println("Folder created: " + folderPath);
             } catch (IOException e) {
                 System.err.println("Error creating folder: " + e.getMessage());
                 return;
             }
         }
+
         try (java.util.stream.Stream<Path> files = Files.list(folder)) {
             files.filter(file -> file.toString().endsWith(".txt"))
                     .forEach(file -> fileSelector.getItems().add(file.getFileName().toString()));
@@ -209,6 +220,7 @@ public class SimulationPresenter implements Initializable {
             System.err.println("Error loading files: " + e.getMessage());
         }
     }
+
     private void parseFileContents(String filePath) {
         Path fullPath = Paths.get(System.getProperty("user.dir"), filePath);
         try {
@@ -231,13 +243,13 @@ public class SimulationPresenter implements Initializable {
             grassFieldType.setValue(values[13]);
             mutationType.setValue(values[14]);
             animalType.setValue(values[15]);
-
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
         } catch (ArrayIndexOutOfBoundsException e) {
             System.err.println("Error parsing file content: " + e.getMessage());
         }
     }
+
     public void onSavePresetClicked(ActionEvent actionEvent) {
         String presetFileName = presetName.getText().trim();
         if (presetFileName.isEmpty()) {
@@ -246,7 +258,8 @@ public class SimulationPresenter implements Initializable {
         }
 
         String filePath = System.getProperty("user.dir") + "/saves/" + presetFileName;
-        String content = String.join(";",
+        String content = String.join(
+                ";",
                 mapHeightField.getText(),
                 mapWidthField.getText(),
                 startingAnimals.getText(),

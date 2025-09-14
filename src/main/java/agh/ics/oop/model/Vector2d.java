@@ -6,10 +6,10 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public record Vector2d(int x, int y) implements Comparable<Vector2d> {
+
     @Override
     public String toString() {
         return x + "," + y;
-
     }
 
     public boolean precedes(Vector2d other) {
@@ -40,17 +40,17 @@ public record Vector2d(int x, int y) implements Comparable<Vector2d> {
         return new Vector2d(-x, -y);
     }
 
-
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Vector2d))
+        if (!(other instanceof Vector2d)) {
             return false;
-        if (this.hashCode() != other.hashCode())
+        }
+        if (this.hashCode() != other.hashCode()) {
             return false;
-        return (this.x == ((Vector2d) other).x() && this.y == ((Vector2d) other).y());
-
-
+        }
+        return this.x == ((Vector2d) other).x() && this.y == ((Vector2d) other).y();
     }
+
     @Override
     public int compareTo(Vector2d other) {
         int xCompare = Integer.compare(this.x, other.x);
@@ -60,14 +60,11 @@ public record Vector2d(int x, int y) implements Comparable<Vector2d> {
         return Integer.compare(this.y, other.y);
     }
 
-
-
-
-
-
     public static Vector2d random(AbstractWorldMap.Boundary boundary) {
         Random random = new Random();
-        return new Vector2d(random.nextInt(boundary.lowerLeft().x,boundary.upperRight().x), random.nextInt(boundary.lowerLeft().y,boundary.upperRight().x));
-
+        return new Vector2d(
+                random.nextInt(boundary.lowerLeft().x, boundary.upperRight().x),
+                random.nextInt(boundary.lowerLeft().y, boundary.upperRight().x)
+        );
     }
 }

@@ -4,31 +4,32 @@ import agh.ics.oop.model.interfaces.WorldElement;
 import javafx.scene.image.Image;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class Grass implements WorldElement {
-    final static private HashMap<String, Image> images = new  HashMap<String,Image>();
-    final private Vector2d position;
-    public Vector2d getPosition() {
-        return position;
-    }
+    private static final Map<String, Image> IMAGES = new HashMap<>();
+
+    private final Vector2d position;
+
     public Grass(Vector2d position) {
         this.position = position;
     }
 
-
-    @Override
-    public boolean isAt(Vector2d coordinates) {
-        return false;
+    public Vector2d getPosition() {
+        return position;
     }
 
     @Override
-    public Image getImage()
-    {
-        if(!images.containsKey("grass-2.png"))
-        {
-            images.put("grass-2.png",new Image(getResourceName()));
-        }
-        return images.get("grass-2.png");
+    public boolean isAt(Vector2d coordinates) {
+        return Objects.equals(position, coordinates);
+    }
+
+    @Override
+    public Image getImage() {
+        String resourceName = getResourceName();
+        IMAGES.computeIfAbsent(resourceName, rn -> new Image(rn));
+        return IMAGES.get(resourceName);
     }
 
     @Override
@@ -45,6 +46,4 @@ public class Grass implements WorldElement {
     public String toString() {
         return "*";
     }
-
-
 }

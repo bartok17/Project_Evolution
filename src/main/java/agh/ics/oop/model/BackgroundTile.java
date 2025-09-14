@@ -4,17 +4,22 @@ import agh.ics.oop.model.interfaces.WorldElement;
 import javafx.scene.image.Image;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class BackgroundTile implements WorldElement {
-    final static private HashMap<String, Image> images = new  HashMap<String,Image>();
-    final private Vector2d position;
-    public Vector2d getPosition() {
-        return position;
-    }
+
+    private static final String RESOURCE_NAME = "backgroundTile.png";
+    private static final Map<String, Image> IMAGES = new HashMap<>();
+
+    private final Vector2d position;
+
     public BackgroundTile(Vector2d position) {
         this.position = position;
     }
 
+    public Vector2d getPosition() {
+        return position;
+    }
 
     @Override
     public boolean isAt(Vector2d coordinates) {
@@ -22,18 +27,16 @@ public class BackgroundTile implements WorldElement {
     }
 
     @Override
-    public Image getImage()
-    {
-        if(!images.containsKey("backgroundTile.png"))
-        {
-            images.put("backgroundTile.png",new Image(getResourceName()));
+    public Image getImage() {
+        if (!IMAGES.containsKey(RESOURCE_NAME)) {
+            IMAGES.put(RESOURCE_NAME, new Image(getResourceName()));
         }
-        return images.get("backgroundTile.png");
+        return IMAGES.get(RESOURCE_NAME);
     }
 
     @Override
     public String getResourceName() {
-        return "backgroundTile.png";
+        return RESOURCE_NAME;
     }
 
     @Override
@@ -45,5 +48,4 @@ public class BackgroundTile implements WorldElement {
     public String toString() {
         return " ";
     }
-
 }

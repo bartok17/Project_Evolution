@@ -7,25 +7,23 @@ public class RequiredGrassField extends GrassField {
     private final int equatorSize;
     private final int equatorStart;
 
-    public RequiredGrassField(int width, int height,int grassCount,boolean geneSwap,int mapId,int grassValue,AbstractMapMovementLogistic mapMovementLogistic)
-    {
-        super(width,height,geneSwap,mapId,grassValue);
+    public RequiredGrassField(int width, int height, int grassCount, boolean geneSwap, int mapId,
+                              int grassValue, AbstractMapMovementLogistic mapMovementLogistic) {
+        super(width, height, geneSwap, mapId, grassValue);
         setMapLogic(mapMovementLogistic);
-        this.equatorSize = height/5;
-        equatorStart = (height - equatorSize) / 2;
+        this.equatorSize = height / 5;
+        this.equatorStart = (height - equatorSize) / 2;
 
         initializeGrassPlaces();
 
         for (int i = 0; i < grassCount; i++) {
             addGrass();
         }
-
-
     }
 
     @Override
     public boolean isPriorityPosition(Vector2d position) {
-        return  (position.y() >= equatorStart && position.y() < equatorStart + equatorSize);
+        return position.y() >= equatorStart && position.y() < equatorStart + equatorSize;
     }
 
     @Override
@@ -34,19 +32,27 @@ public class RequiredGrassField extends GrassField {
         Vector2d newPosition;
         try {
             if (isOnEquator) {
-                if (availablePriorityPositions.isEmpty()) { addGrass();
+                if (availablePriorityPositions.isEmpty()) {
+                    addGrass();
                     return;
-                    //throw new GrassSetFullException("No more positions in the priority available to place grass.");
+                    // throw new GrassSetFullException("No more positions in the priority available to place grass.");
                 }
                 int randIndex = rand.nextInt(availablePriorityPositions.size());
-                newPosition = availablePriorityPositions.stream().skip(randIndex).findFirst().orElseThrow();
+                newPosition = availablePriorityPositions.stream()
+                        .skip(randIndex)
+                        .findFirst()
+                        .orElseThrow();
                 availablePriorityPositions.remove(newPosition);
             } else {
                 if (availableNonPriorityPositions.isEmpty()) {
-                    throw new GrassSetFullException("No more positions in the non-priority available to place grass.");
+                    throw new GrassSetFullException(
+                            "No more positions in the non-priority available to place grass.");
                 }
                 int randIndex = rand.nextInt(availableNonPriorityPositions.size());
-                newPosition = availableNonPriorityPositions.stream().skip(randIndex).findFirst().orElseThrow();
+                newPosition = availableNonPriorityPositions.stream()
+                        .skip(randIndex)
+                        .findFirst()
+                        .orElseThrow();
                 availableNonPriorityPositions.remove(newPosition);
             }
             grasses.put(newPosition, new Grass(newPosition));
@@ -54,7 +60,4 @@ public class RequiredGrassField extends GrassField {
             System.out.println(e.getMessage());
         }
     }
-
-
-
 }
